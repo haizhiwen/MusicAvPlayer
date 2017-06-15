@@ -13,9 +13,6 @@
 
 + (LyricManager *)sharedManager;
 
-@property (nonatomic, strong) LyricPickerView * lyricView;
-
-@property (nonatomic, assign) NSUInteger index;
 
 - (NSMutableArray *)getMusicLyricInfoDetailWithLyricUrl:(NSString *)url;
 

@@ -15,7 +15,8 @@
 
 @end
 
-@interface AvPlayerView : UIView <UIPickerViewDelegate,UIPickerViewDataSource>
+@interface AvPlayerView : UIView
+
 @property (nonatomic, weak) id<PauseOrPlayerDelegate> delegate;
 
 @property (nonatomic, strong) NSMutableArray *pickeDataArray;

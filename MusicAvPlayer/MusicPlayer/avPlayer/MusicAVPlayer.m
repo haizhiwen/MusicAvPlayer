@@ -26,13 +26,7 @@
     }
     return player;
 }
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-    }
-    return self;
-}
+
 - (AvPlayerView *)playerView{
     if (!_playerView) {
         _playerView = [[AvPlayerView alloc] init];
@@ -47,7 +41,7 @@
     }
     ///获取歌词，赋值给view
     NSMutableArray *lyricArray = [[LyricManager sharedManager] getMusicLyricInfoDetailWithLyricUrl:lyricurl];
-    self.playerView.pickeDataArray = lyricArray;
+    [self.playerView setPickeDataArray:lyricArray];
     ///初始化播放器
     _musicUrl = musicUrl;
     [self initPlayer];
@@ -55,6 +49,7 @@
 - (void)reset{
     [self pause];
     [self.currentItem removeObserver:self forKeyPath:@"status"];
+    [self.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
     [self replaceCurrentItemWithPlayerItem:nil];
     if (self.timeObserve) {
         [self removeTimeObserver:self.timeObserve];
@@ -67,13 +62,18 @@
     
     NSURL * url  = [NSURL URLWithString:self.musicUrl];
     AVPlayerItem * songItem = [[AVPlayerItem alloc]initWithURL:url];
-    [self setAutomaticallyWaitsToMinimizeStalling:NO];
+    
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0){
+        [self setAutomaticallyWaitsToMinimizeStalling:NO];
+    }
     [self replaceCurrentItemWithPlayerItem:songItem];
     
     __weak typeof(self) weakSelf = self;
     self.timeObserve = [self addPeriodicTimeObserverForInterval:CMTimeMake(1.0, 1.0) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         [weakSelf handleProgress:time];
     }];
+    [self.currentItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
+
     [self.currentItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:self.currentItem];
 }
@@ -97,7 +97,7 @@
             case AVPlayerStatusReadyToPlay:{
                 //                self.status = SUPlayStatusReadyToPlay;
                 NSLog(@"KVO：准备完毕，可以播放");
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self play];
                 });
             } break;
@@ -107,6 +107,14 @@
             default:
                 break;
         }
+    }else if ([keyPath isEqualToString:@"loadedTimeRanges"]) {
+        AVPlayerItem * songItem = object;
+        if ([keyPath isEqualToString:@"loadedTimeRanges"]) {
+            NSArray * array = songItem.loadedTimeRanges;
+            CMTimeRange timeRange = [array.firstObject CMTimeRangeValue]; //本次缓冲的时间范围
+            NSTimeInterval totalBuffer = CMTimeGetSeconds(timeRange.start) + CMTimeGetSeconds(timeRange.duration); //缓冲总长度
+            NSLog(@"共缓冲%.2f",totalBuffer);
+        }
     }
 }
 - (void)playbackFinished:(NSNotification *)notice {
@@ -115,6 +123,7 @@
         [self removeTimeObserver:_timeObserve];
         _timeObserve = nil;
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.musicUrl = nil;
 }
 - (void)setContinueGoOn:(BOOL)goOn{

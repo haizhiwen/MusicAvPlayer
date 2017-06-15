@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self initPlayer];
     [self configUI];
     self.view.backgroundColor = [UIColor whiteColor];
