@@ -22,6 +22,7 @@
 		4F19FB5C1EF1698E00A30E9B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F19FB5B1EF1698E00A30E9B /* RootViewController.m */; };
 		4F1A09BA1EF227A300B7C65F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1A09B91EF227A300B7C65F /* AVFoundation.framework */; };
 		4F1A09BC1EF2564E00B7C65F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1A09BB1EF2564E00B7C65F /* AudioToolbox.framework */; };
+		4F1A09BE1EF27B3200B7C65F /* img1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4F1A09BD1EF27B3200B7C65F /* img1.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		4F19FB5B1EF1698E00A30E9B /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		4F1A09B91EF227A300B7C65F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4F1A09BB1EF2564E00B7C65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4F1A09BD1EF27B3200B7C65F /* img1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img1.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 		4F19FB3D1EF14E5D00A30E9B /* MusicPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				4F1A09BD1EF27B3200B7C65F /* img1.jpg */,
 				4F19FB3E1EF14E5D00A30E9B /* avPlayer */,
 				4F19FB411EF14E5D00A30E9B /* Lyric */,
 				4F19FB461EF14E5D00A30E9B /* MusicView */,
@@ -205,6 +208,11 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = UN7WQUBM37;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -232,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F19FAFE1EF13BA600A30E9B /* LaunchScreen.storyboard in Resources */,
+				4F1A09BE1EF27B3200B7C65F /* img1.jpg in Resources */,
 				4F19FAFB1EF13BA600A30E9B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

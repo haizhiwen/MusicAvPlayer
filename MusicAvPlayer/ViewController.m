@@ -21,15 +21,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
-    NSString * lyric = @"http://www.4coder.cn/api/getLyricPath.ashx?groupId=6595";
-    NSString * music = @"http://ting666.yymp3.net:81/new6/huangjiaju/5.mp3";
-//    [self initPlayerWithMusicUrl:music LyricUrl:lyric];
-    
+
     [self configUI];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    [[MusicAVPlayer sharedMucisPlayer] configNowPlayingInfoCenter];
     // Do any additional setup after loading the view, typically from a nib.
 }
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self resignFirstResponder];
+}
+- (BOOL)canBecomeFirstResponder{
+    return YES;
+}
+
 - (void)initPlayerWithMusicUrl:(NSString *)musicurl
                       LyricUrl:(NSString *)lyricurl{
     self.avPlayer = [MusicAVPlayer sharedMucisPlayer];
@@ -39,6 +52,40 @@
     AvPlayerView * view = self.avPlayer.playerView;
     view.frame = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width,  [[UIScreen mainScreen] bounds].size.height - 120);
     [self.view addSubview:view];
+}
+
+
+
+#pragma mark - 接收方法的设置
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event {
+    if (event.type == UIEventTypeRemoteControl) {  //判断是否为远程控制
+        switch (event.subtype) {
+            case  UIEventSubtypeRemoteControlPlay:
+                NSLog(@"播放");
+
+//                if (!_isPlayering) {
+//                    [self.avPlayer play];
+//                }
+//                _isPlayering = !_isPlayering;
+                break;
+            case UIEventSubtypeRemoteControlPause:
+                NSLog(@"暂停");
+
+//                if (_isPlayering) {
+//                    [self pause];
+//                }
+//                _isPlayering = !_isPlayering;
+                break;
+            case UIEventSubtypeRemoteControlNextTrack:
+                NSLog(@"下一首");
+                break;
+            case UIEventSubtypeRemoteControlPreviousTrack:
+                NSLog(@"上一首 ");
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {

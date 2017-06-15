@@ -7,7 +7,7 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
-@class AvPlayerView;
+#import "AvPlayerView.h"
 
 @interface MusicAVPlayer : AVPlayer
 
@@ -20,7 +20,6 @@
 
 @property(nonatomic, copy) void(^musicProgressBlock)(CMTime time);
 
-
-
+- (void)configNowPlayingInfoCenter;
 
 @end

@@ -7,13 +7,16 @@
 //
 
 #import "MusicAVPlayer.h"
-#import "AvPlayerView.h"
 #import "LyricManager.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface MusicAVPlayer ()<PauseOrPlayerDelegate>
 
 @property(nonatomic, strong) id         timeObserve;
 @property (nonatomic, copy) NSString *  musicUrl;
+
+@property(nonatomic, assign) float currentTime;
+@property(nonatomic, assign) BOOL isPlayering;
 
 @end
 
@@ -29,7 +32,6 @@
         player = [[MusicAVPlayer alloc]init];
         
     });
-    
     return player;
 }
 
@@ -84,6 +86,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:self.currentItem];
 }
 - (void)handleProgress:(CMTime)time{
+    _currentTime = CMTimeGetSeconds(time);
     if (self.musicProgressBlock) {
         self.musicProgressBlock(time);
     }
@@ -105,6 +108,7 @@
                 NSLog(@"KVO：准备完毕，可以播放");
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self.currentItem seekToTime:CMTimeMake(0, 1)];
+                    _isPlayering = YES;
                     [self play];
                 });
             } break;
@@ -134,6 +138,7 @@
     self.musicUrl = nil;
 }
 - (void)setContinueGoOn:(BOOL)goOn{
+    _isPlayering = goOn;
     if (goOn) {
         [self play];
     }else{
@@ -141,5 +146,33 @@
     }
 }
 
+//设置锁屏状态，显示的歌曲信息
+- (void)configNowPlayingInfoCenter{
+    //         NSDictionary *info = [self.musicList objectAtIndex:_playIndex];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    
+    //歌曲名称
+    [dict setObject:@"不再犹豫" forKey:MPMediaItemPropertyTitle];
+    
+    //演唱者
+    [dict setObject:@"黄家驹" forKey:MPMediaItemPropertyArtist];
+    
+    //专辑名
+    [dict setObject:@"爱你一生" forKey:MPMediaItemPropertyAlbumTitle];
+    
+    //专辑缩略图
+    UIImage *image = [UIImage imageNamed:@"img1.jpg"];
+    MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:image];
+    [dict setObject:artwork forKey:MPMediaItemPropertyArtwork];
+    
+    //音乐剩余时长
+//    [dict setObject:[NSNumber numberWithDouble:(CMTimeGetSeconds(self.currentItem.duration)-_currentTime)] forKey:MPMediaItemPropertyPlaybackDuration];
+    
+    //音乐当前播放时间 在计时器中修改
+//    [dict setObject:[NSNumber numberWithDouble:_currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+    
+    //设置锁屏状态下屏幕显示播放音乐信息
+    [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
+}
 
 @end
