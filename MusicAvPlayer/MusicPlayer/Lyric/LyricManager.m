@@ -35,9 +35,11 @@
     if (!size) {
         NSFileManager* mgr = [NSFileManager defaultManager];
         [mgr createFileAtPath:filePath contents:nil attributes:nil];
-        NSFileHandle * write = [NSFileHandle fileHandleForWritingAtPath:filePath];
-        NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-        [write writeData:data];
+        NSError * error = nil;
+        NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] options:NSDataReadingMappedIfSafe error:&error];
+        NSLog(@"%@",error.localizedDescription);
+        [data writeToFile:filePath atomically:YES];
+//        [write writeData:data];
         _data = data;
     }else{
         _data = [NSData dataWithContentsOfFile:filePath];
