@@ -21,6 +21,7 @@
 		4F19FB591EF1502A00A30E9B /* LyricPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F19FB581EF1502A00A30E9B /* LyricPickerView.m */; };
 		4F19FB5C1EF1698E00A30E9B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F19FB5B1EF1698E00A30E9B /* RootViewController.m */; };
 		4F1A09BA1EF227A300B7C65F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1A09B91EF227A300B7C65F /* AVFoundation.framework */; };
+		4F1A09BC1EF2564E00B7C65F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1A09BB1EF2564E00B7C65F /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		4F19FB5A1EF1698E00A30E9B /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		4F19FB5B1EF1698E00A30E9B /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		4F1A09B91EF227A300B7C65F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4F1A09BB1EF2564E00B7C65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1A09BC1EF2564E00B7C65F /* AudioToolbox.framework in Frameworks */,
 				4F1A09BA1EF227A300B7C65F /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,6 +166,7 @@
 		4F1A09B81EF227A300B7C65F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F1A09BB1EF2564E00B7C65F /* AudioToolbox.framework */,
 				4F1A09B91EF227A300B7C65F /* AVFoundation.framework */,
 			);
 			name = Frameworks;

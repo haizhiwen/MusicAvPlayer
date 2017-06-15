@@ -116,12 +116,12 @@
         }
     }else if ([keyPath isEqualToString:@"loadedTimeRanges"]) {
         AVPlayerItem * songItem = object;
-        if ([keyPath isEqualToString:@"loadedTimeRanges"]) {
-            NSArray * array = songItem.loadedTimeRanges;
-            CMTimeRange timeRange = [array.firstObject CMTimeRangeValue]; //本次缓冲的时间范围
-            NSTimeInterval totalBuffer = CMTimeGetSeconds(timeRange.start) + CMTimeGetSeconds(timeRange.duration); //缓冲总长度
-            NSLog(@"共缓冲%.2f",totalBuffer);
-        }
+
+        NSArray * array = songItem.loadedTimeRanges;
+        CMTimeRange timeRange = [array.firstObject CMTimeRangeValue]; //本次缓冲的时间范围
+        NSTimeInterval totalBuffer = CMTimeGetSeconds(timeRange.start) + CMTimeGetSeconds(timeRange.duration); //缓冲总长度
+        NSLog(@"共缓冲%.2f",totalBuffer);
+
     }
 }
 - (void)playbackFinished:(NSNotification *)notice {
