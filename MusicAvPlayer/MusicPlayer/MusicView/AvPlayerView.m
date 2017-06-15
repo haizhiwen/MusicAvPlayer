@@ -51,6 +51,8 @@
     [self.lyricView setPickeDataArray:pickeDataArray];
     [self.lyricView reloadAllComponents];
     [self.lyricView selectRow:0 inComponent:0 animated:YES];
+    m_circularProgressBar.totalTime = 0;
+    [m_circularProgressBar stopTimer];
 }
 
 /**
@@ -66,7 +68,7 @@
         [self seleteIndexOfPickerView:current];
     }
     if (!m_circularProgressBar.totalTime) {
-        if (total >= 0) {
+        if (total > 0) {
             [m_circularProgressBar setTotalSecondTime:total];
             [m_circularProgressBar startTimer];
         }

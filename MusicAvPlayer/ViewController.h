@@ -10,6 +10,8 @@
 
 @interface ViewController : UIViewController
 
+- (void)initPlayerWithMusicUrl:(NSString *)musicurl
+                      LyricUrl:(NSString *)lyricurl;
 
 @end
 

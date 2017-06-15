@@ -21,16 +21,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initPlayer];
+    NSString * lyric = @"http://www.4coder.cn/api/getLyricPath.ashx?groupId=6595";
+    NSString * music = @"http://ting666.yymp3.net:81/new6/huangjiaju/5.mp3";
+//    [self initPlayerWithMusicUrl:music LyricUrl:lyric];
+    
     [self configUI];
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view, typically from a nib.
 }
-- (void)initPlayer{
+- (void)initPlayerWithMusicUrl:(NSString *)musicurl
+                      LyricUrl:(NSString *)lyricurl{
     self.avPlayer = [MusicAVPlayer sharedMucisPlayer];
-    NSString * lyric = @"http://www.4coder.cn/api/getLyricPath.ashx?groupId=6595";
-    NSString * music = @"http://ting666.yymp3.net:81/new6/huangjiaju/5.mp3";
-    [self.avPlayer musicPlayerWithUrl:music andLyricUrl:lyric];
+    [self.avPlayer musicPlayerWithUrl:musicurl andLyricUrl:lyricurl];
 }
 - (void)configUI{
     AvPlayerView * view = self.avPlayer.playerView;
