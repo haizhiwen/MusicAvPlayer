@@ -21,9 +21,15 @@
 
 + (MusicAVPlayer *)sharedMucisPlayer{
     static MusicAVPlayer * player = nil;
-    if (!player) {
-        player = [[MusicAVPlayer alloc] init];
-    }
+    
+    static dispatch_once_t once;
+    
+    dispatch_once(&once, ^{
+        
+        player = [[MusicAVPlayer alloc]init];
+        
+    });
+    
     return player;
 }
 
@@ -98,6 +104,7 @@
                 //                self.status = SUPlayStatusReadyToPlay;
                 NSLog(@"KVO：准备完毕，可以播放");
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.currentItem seekToTime:CMTimeMake(0, 1)];
                     [self play];
                 });
             } break;
