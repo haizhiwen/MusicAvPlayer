@@ -22,6 +22,9 @@
 }
 - (void)setPickeDataArray:(NSMutableArray *)pickeDataArray{
     _pickeDataArray = pickeDataArray;
+    
+    [self reloadAllComponents];
+    [self selectRow:0 inComponent:0 animated:YES];
 }
 #pragma mark pickerView delegate
 //调用协议中的方法

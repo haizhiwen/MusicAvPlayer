@@ -48,9 +48,8 @@
 
 - (void)setPickeDataArray:(NSMutableArray *)pickeDataArray{
     _pickeDataArray = pickeDataArray;
-    [self.lyricView setPickeDataArray:pickeDataArray];
-    [self.lyricView reloadAllComponents];
-    [self.lyricView selectRow:0 inComponent:0 animated:YES];
+    [_lyricView setPickeDataArray:pickeDataArray];
+  
     m_circularProgressBar.totalTime = 0;
     [m_circularProgressBar stopTimer];
 }

@@ -24,6 +24,5 @@
 - (void)handleProgress:(CMTime)time
               AndTotal:(float)total;
 
-- (void)restView;
 
 @end
