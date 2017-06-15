@@ -20,7 +20,9 @@
     }
     return self;
 }
-
+- (void)setPickeDataArray:(NSMutableArray *)pickeDataArray{
+    _pickeDataArray = pickeDataArray;
+}
 #pragma mark pickerView delegate
 //调用协议中的方法
 //   <1>设置选择器控件显示的列数

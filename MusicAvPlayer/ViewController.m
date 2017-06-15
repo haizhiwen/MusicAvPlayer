@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     NSString * lyric = @"http://www.4coder.cn/api/getLyricPath.ashx?groupId=6595";
     NSString * music = @"http://ting666.yymp3.net:81/new6/huangjiaju/5.mp3";

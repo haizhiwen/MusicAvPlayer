@@ -8,7 +8,6 @@
 
 #import "LyricManager.h"
 #import "LyricModel.h"
-#import "LyricPickerView.h"
 
 @interface LyricManager ()
 
